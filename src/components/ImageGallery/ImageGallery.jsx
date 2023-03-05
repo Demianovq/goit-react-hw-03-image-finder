@@ -4,6 +4,7 @@ import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../ButtonLoadmore/Button';
 import { GetImages } from '../GetImages/GetImages';
 import { Loader } from '../Loader/Loader';
+import { toast } from 'react-toastify';
 
 export class ImageGallery extends Component {
   state = {
@@ -33,6 +34,13 @@ export class ImageGallery extends Component {
           this.setState({
             isMore: true,
           });
+
+          this.setState({
+            isLoading: false,
+          });
+        }
+        if (resp.data.hits.length === 0) {
+          toast.error('Sorry, we did not find any images . Please try again.');
           this.setState({
             isLoading: false,
           });
