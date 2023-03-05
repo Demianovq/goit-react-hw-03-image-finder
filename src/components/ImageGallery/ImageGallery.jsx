@@ -1,37 +1,55 @@
 import { Component } from 'react';
-import { GetImages } from '../GetImages/GetImages';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../ButtonLoadmore/Button';
+import { GetImages } from '../GetImages/GetImages';
+import { Loader } from '../Loader/Loader';
 
 export class ImageGallery extends Component {
   state = {
     images: [],
-    page: 1,
+    isMore: false,
+    isLoading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
+    const { textSearch, page } = this.props;
     if (
-      prevProps.value !== this.props.value ||
-      prevState.page !== this.state.page
-    )
-      GetImages(this.props.value, this.state.page).then(resp => {
-        this.setState({ images: [...prevState.images, ...resp.data.hits] });
+      prevProps.textSearch !== textSearch ||
+      (prevProps.page !== page && page !== 1)
+    ) {
+      this.setState({
+        isLoading: true,
       });
+      GetImages(textSearch, page).then(resp => {
+        if (prevProps.textSearch !== textSearch) {
+          this.setState({ images: [...resp.data.hits] });
+        } else {
+          this.setState({
+            images: [...prevState.images, ...resp.data.hits],
+          });
+        }
+        if (resp.data.hits.length > 11) {
+          this.setState({
+            isMore: true,
+          });
+          this.setState({
+            isLoading: false,
+          });
+        }
+      });
+    }
   }
-
-  handleLoadMore = () => {
-    this.setState(prev => ({ page: prev.page + 1 }));
-  };
 
   render() {
     return (
       <>
+        {this.state.isLoading && <Loader />}
         <ul className="ImageGallery">
           {this.state.images.map(image => {
             return <ImageGalleryItem key={image.id} image={image} />;
           })}
         </ul>
-        <Button />
+        {this.state.isMore && <Button onClick={this.props.handleLoadMore} />}
       </>
     );
   }
