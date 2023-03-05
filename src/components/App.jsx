@@ -12,6 +12,7 @@ export class App extends Component {
   };
 
   handleSubmit = textSearch => {
+    if (textSearch === '') return;
     this.setState({ textSearch, page: 1 });
   };
 

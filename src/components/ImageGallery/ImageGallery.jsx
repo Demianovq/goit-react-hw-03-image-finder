@@ -43,6 +43,7 @@ export class ImageGallery extends Component {
           toast.error('Sorry, we did not find any images . Please try again.');
           this.setState({
             isLoading: false,
+            isMore: false,
           });
         }
       });
