@@ -6,27 +6,30 @@ export class ImageGalleryItem extends Component {
     isOpen: false,
   };
 
-  renderAModal = () => {
-    this.setState({
-      isOpen: true,
-    });
+  showAModal = () => {
+    this.setState(({ isOpen }) => ({ isOpen: !isOpen }));
   };
 
   render() {
     return (
       <div>
-        <li key={this.props.id} className="ImageGalleryItem">
-          {this.state.isOpen && (
-            <Modal image={this.props.image.largeImageURL} />
-          )}
-
+        <li
+          key={this.props.id}
+          onClick={this.showAModal}
+          className="ImageGalleryItem"
+        >
           <img
-            onClick={this.renderAModal}
             src={this.props.image.webformatURL}
             alt={this.props.image.tags}
-            width="300px"
             className="ImageGalleryItem-image"
           />
+          {this.state.isOpen && (
+            <Modal
+              onOverlayClose={this.showAModal}
+              image={this.props.image.largeImageURL}
+              alt={this.props.image.tags}
+            />
+          )}
         </li>
       </div>
     );
