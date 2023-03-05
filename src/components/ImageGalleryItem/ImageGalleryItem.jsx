@@ -1,5 +1,3 @@
-import { Modal } from './Modal';
-
 export const ImageGalleryItem = ({
   image: { id, webformatURL, largeImageURL, tags },
 }) => {
