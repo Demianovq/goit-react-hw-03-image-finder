@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 
 export class Searchbar extends Component {
@@ -38,3 +39,7 @@ export class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+};

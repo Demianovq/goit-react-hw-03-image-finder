@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../ButtonLoadmore/Button';
@@ -54,3 +55,9 @@ export class ImageGallery extends Component {
     );
   }
 }
+
+ImageGallery.propTypes = {
+  textSearch: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  handleLoadMore: PropTypes.func.isRequired,
+};
