@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Modal } from './Modal/Modal';
+import { Modal } from '../Modal/Modal';
 import { Component } from 'react';
 
 export class ImageGalleryItem extends Component {
@@ -13,26 +13,24 @@ export class ImageGalleryItem extends Component {
 
   render() {
     return (
-      <div>
-        <li
-          key={this.props.id}
-          onClick={this.showAModal}
-          className="ImageGalleryItem"
-        >
-          <img
-            src={this.props.image.webformatURL}
+      <li
+        key={this.props.id}
+        onClick={this.showAModal}
+        className="ImageGalleryItem"
+      >
+        <img
+          src={this.props.image.webformatURL}
+          alt={this.props.image.tags}
+          className="ImageGalleryItem-image"
+        />
+        {this.state.isOpen && (
+          <Modal
+            onOverlayClose={this.showAModal}
+            image={this.props.image.largeImageURL}
             alt={this.props.image.tags}
-            className="ImageGalleryItem-image"
           />
-          {this.state.isOpen && (
-            <Modal
-              onOverlayClose={this.showAModal}
-              image={this.props.image.largeImageURL}
-              alt={this.props.image.tags}
-            />
-          )}
-        </li>
-      </div>
+        )}
+      </li>
     );
   }
 }

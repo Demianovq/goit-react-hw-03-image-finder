@@ -1,5 +1,4 @@
 import axios from 'axios';
-import PropTypes from 'prop-types';
 
 export const GetImages = async (searchValue, page) => {
   const BASE_URL = 'https://pixabay.com/api/';
@@ -16,9 +15,4 @@ export const GetImages = async (searchValue, page) => {
 
   const response = axios.get(BASE_URL, { params });
   return response;
-};
-
-GetImages.propTypes = {
-  searchValue: PropTypes.string.isRequired,
-  page: PropTypes.number.isRequired,
 };

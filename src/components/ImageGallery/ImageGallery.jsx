@@ -21,6 +21,7 @@ export class ImageGallery extends Component {
     ) {
       this.setState({
         isLoading: true,
+        isMore: false,
       });
       GetImages(textSearch, page).then(resp => {
         if (prevProps.textSearch !== textSearch) {
@@ -54,11 +55,14 @@ export class ImageGallery extends Component {
     return (
       <>
         {this.state.isLoading && <Loader />}
-        <ul className="ImageGallery">
-          {this.state.images.map(image => {
-            return <ImageGalleryItem key={image.id} image={image} />;
-          })}
-        </ul>
+        {this.state.images.length > 0 && (
+          <ul className="ImageGallery">
+            {this.state.images.map(image => {
+              return <ImageGalleryItem key={image.id} image={image} />;
+            })}
+          </ul>
+        )}
+
         {this.state.isMore && <Button onClick={this.props.handleLoadMore} />}
       </>
     );
