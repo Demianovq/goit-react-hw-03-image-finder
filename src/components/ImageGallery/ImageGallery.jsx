@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 import { Button } from '../ButtonLoadmore/Button';
-import { GetImages } from '../GetImages/GetImages';
+import { GetImages } from '../../GetImages';
 import { Loader } from '../Loader/Loader';
 import { toast } from 'react-toastify';
 
@@ -23,6 +23,13 @@ export class ImageGallery extends Component {
         isLoading: true,
         isMore: false,
       });
+      if (prevProps.textSearch !== textSearch) {
+        this.setState({
+          images: [],
+          isLoading: true,
+          isMore: false,
+        });
+      }
       GetImages(textSearch, page).then(resp => {
         if (prevProps.textSearch !== textSearch) {
           this.setState({ images: [...resp.data.hits] });
